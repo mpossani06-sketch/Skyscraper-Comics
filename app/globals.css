@@ -1,0 +1,119 @@
+@import "tailwindcss";
+
+/* ------------------------------------------------------------------ *
+ * Skyscraper Comics design tokens
+ * Palette + fonts live here as CSS variables / Tailwind theme tokens.
+ * Never hardcode hex values in components — use bg-pow, border-ink, etc.
+ * ------------------------------------------------------------------ */
+@theme {
+  /* Palette — comic ink-and-primaries */
+  --color-ink: #14131a; /* near-black — outlines, body text, panel borders */
+  --color-paper: #fbf7ec; /* warm off-white page background */
+  --color-pow: #ff2d4e; /* vermilion red — primary CTA / action accent */
+  --color-zap: #2e7df6; /* electric blue — links, secondary accent */
+  --color-pop: #ffd23f; /* comic yellow — highlights, burst fills */
+  --color-grape: #8b2fc9; /* purple — tertiary accent, used sparingly */
+
+  /* Typography — wired to next/font css variables (see app/layout.tsx) */
+  --font-display: var(--font-bangers), "Comic Sans MS", system-ui, sans-serif;
+  --font-accent: var(--font-bungee), system-ui, sans-serif;
+  --font-body: var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
+  --font-dialogue: var(--font-comic-neue), "Comic Sans MS", cursive;
+}
+
+/* Sensible page defaults */
+:root {
+  color-scheme: light;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background-color: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+}
+
+/* Visible keyboard focus everywhere — accessibility requirement */
+:focus-visible {
+  outline: 3px solid var(--color-zap);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* ------------------------------------------------------------------ *
+ * Halftone / Ben-Day dot texture — reusable background layers.
+ * Kept low-opacity so overlaid text stays legible.
+ * ------------------------------------------------------------------ */
+.halftone {
+  background-image: radial-gradient(
+    var(--color-ink) 1.4px,
+    transparent 1.5px
+  );
+  background-size: 11px 11px;
+  background-position: 0 0;
+  opacity: 0.12;
+}
+
+.halftone-dense {
+  background-image: radial-gradient(
+    var(--color-ink) 1.6px,
+    transparent 1.7px
+  );
+  background-size: 8px 8px;
+  opacity: 0.16;
+}
+
+/* Colored halftone for inside bursts / accent bands */
+.halftone-pop {
+  background-image: radial-gradient(var(--color-pop) 2px, transparent 2.1px);
+  background-size: 12px 12px;
+  opacity: 0.5;
+}
+
+/* Diagonal halftone band (for the Featured drop section) */
+.halftone-diagonal {
+  background-image: radial-gradient(
+    var(--color-ink) 1.5px,
+    transparent 1.6px
+  );
+  background-size: 10px 10px;
+  opacity: 0.14;
+  rotate: -8deg;
+  scale: 1.4;
+}
+
+/* Hard comic drop-shadow — the inked "sticker" look */
+.ink-shadow {
+  box-shadow: 6px 6px 0 0 var(--color-ink);
+}
+.ink-shadow-sm {
+  box-shadow: 4px 4px 0 0 var(--color-ink);
+}
+.ink-shadow-pow {
+  box-shadow: 6px 6px 0 0 var(--color-pow);
+}
+
+/* Slightly loose tracking for Bangers display text */
+.tracking-comic {
+  letter-spacing: 0.02em;
+}
+
+/* ------------------------------------------------------------------ *
+ * Motion: respect prefers-reduced-motion globally as a safety net.
+ * Components also gate Framer Motion via useReducedMotion().
+ * ------------------------------------------------------------------ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
