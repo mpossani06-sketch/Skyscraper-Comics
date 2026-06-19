@@ -1,6 +1,7 @@
 import { getComic, getAllComics } from "@/lib/comics";
 import { Nav } from "@/components/Nav";
 import { Hero } from "@/components/sections/Hero";
+import { CinematicBand } from "@/components/sections/CinematicBand";
 import { Roster } from "@/components/sections/Roster";
 import { FacebookGallery } from "@/components/FacebookGallery";
 import { FeaturedDrop } from "@/components/sections/FeaturedDrop";
@@ -17,6 +18,8 @@ export default function Home() {
       <Nav />
       <main>
         <Hero flagship={flagship} />
+        {/* Plain, cinematic interlude — half video, half minimal panel. */}
+        <CinematicBand />
         <Roster />
         {/* Facebook section sits between the Roster and the Featured drop. */}
         <FacebookGallery />
